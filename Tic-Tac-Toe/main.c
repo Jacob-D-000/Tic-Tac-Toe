@@ -7,10 +7,10 @@ int main()
     char tline [] = {"   ___1_____2_____3___\n"};
     char eline [] = {"   |=====|=====|=====|"};
     // Grid array for users to input
-    char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+    char grid[3][3] = {{'x', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
     // art for x and o's
     char O[3][6] = {" / \\ ", "(   )", " \\_/ "};
-    char X[2][6] = {" X X ", "  X  "};
+    char X[3][6] = {" \\ / ", "  X  ", " / \\ "};
     char wspc[6] = "     ";
     // array to hold y - axis values
     char yaxis[3] = {'A', 'B', 'C'};
@@ -47,12 +47,14 @@ int main()
             for (j = 0; j < 3; j++)
             {
                 if (grid[k][j] == 'x')
-                    if (i == 1 || i == 5 || i == 9)
-                        printf("%s", X[1]);
+                    if (i == 0 || i == 4 || i == 8 )
+                        printf("%s|", X[0] );
+                    else if (i == 1 || i == 5 || i == 9)
+                        printf("%s|", X[1]);
                     // if top or bottom of cell
                     else
-                        printf("%s",X[0]);
-                else if (grid[k][j] == 'y')
+                        printf("%s|",X[2]);
+                else if (grid[k][j] == 'o')
                     if (i == 0 || i == 4 || i == 8 )
                         printf("%s|", O[0] );
                     else if (i == 1 || i == 5 || i == 9)
