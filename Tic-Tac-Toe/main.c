@@ -50,5 +50,5 @@ int main()
 
         if (i == )
     }
-    printf(t2andeline);
+    printf(eline);
 }
