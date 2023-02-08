@@ -14,7 +14,7 @@ I ran into a probably with the flowchart. Turns out I wasn't signed into lucid t
 I think I have the charts logic mostly filled out. It might not be the most optimal, but I have enough information to write and implement the code. I'll start coding after class, and clean up the flowchart for later reference.
 ### 4:00 - 5:00pm
 I was able to implement the flowchart, all be it there were come flaws with the ASCCI art so I will fix that when I get home. I'll explain that in further detail then.
-### 6:00 - 
+### 6:00 - 7:00pm
 So, what was my issue? To put it simply, whitespace. The issues of primary came form how the "\n" was placed in the variable eline. Because eline had a return character and the loop put another return character after each loop of "i", the an extra line was placed of line 3 and 7 (see an ASCCI mock-up below in Fig 3). 
 
 </br>![ASCCI_TICTACTOE](ASCCI_TERMINAL.png)
