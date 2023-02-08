@@ -8,4 +8,5 @@ running into some issues with too many arrays. Going to work on it some more whe
 ## Feb 8
 ### 8:25 - 8:35 am
 Started the Flowchart for the grid printer.
-
+### probably 20 minutes of work during linux
+I ran into a probably with the flowchart. Turns out I wasn't signed into lucid through my school account. Long story short, I couldn't make it thw right size. I've fixed the issue though so there shouldn't be any issues with flowchart size. Still a work in process so ignore the version of the pdf found in this commit.

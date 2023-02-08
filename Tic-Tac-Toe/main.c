@@ -21,13 +21,13 @@ int main()
     //control varibles
     int i;
     int j;
-    // k will be used spefcifkly for the user input grid
+    // k will be used specially for the user input grid
     int k = 0;
-    // l will be used to thorugh an array of letters
+    // l will be used to through an array of letters
     int l = 0;
     // print top of grid before you loop
     printf(tline);
-    printf(t2andeline);
+    printf(eline);
     // start for loop the print each line
     for (i=0; i <11; i++)
     {
@@ -38,14 +38,19 @@ int main()
             if (i == 1 || i == 5 || i == 9 );
                 printf(" %c|", yxais[l]);
                 l++;
-            if ()
+            else 
+                printf("  |");
             for (j = 0; j < 3; j++)
+            {
                 if (grid[k][j] == x)
-
+                    if
 
                 else if ( (grid[k][j] == y)
 
                 else
+            }
+            k++
+            printf('\n')
         }
 
         if (i == )
