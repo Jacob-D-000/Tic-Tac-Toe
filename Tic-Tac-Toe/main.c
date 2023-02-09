@@ -57,6 +57,10 @@ void table_print(char grid[3][3])
                         printf("%s|", X[0] );
                     else if (i == 1 || i == 5 || i == 9)
                         printf("%s|", X[1]);
+                    if (i == 0 || i == 4 || i == 8 )
+                        printf("%s|", X[0] );
+                    else if (i == 1 || i == 5 || i == 9)
+                        printf("%s|", X[1]);
                     // if top or bottom of cell
                     else
                         printf("%s|",X[2]);
