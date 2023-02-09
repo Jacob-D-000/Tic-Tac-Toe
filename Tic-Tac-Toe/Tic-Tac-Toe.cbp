@@ -23,9 +23,6 @@
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 		</Unit>
-		<Unit filename="test.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
