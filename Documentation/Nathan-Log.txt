@@ -1,0 +1,7 @@
+Planning the AI difficulty levels on the whiteboard | 8th of Feburary 2023 | 2:00pm - 6:30pm   
+- Worked with Liam Morton to determine how each level of ai should play
+- The goal of the level is to determine what strategys should beat each level of ai
+- By progressing through the levels of AI the player will learn how to play the perfect strategy of Tic-Tac-Toe
+
+Merging branches and cleaning up Github Repository | 10th of Feburary 2023 | 10:30am -10:55am
+- Cleaning up the repository for easier merging in the future, and to assist with file management
