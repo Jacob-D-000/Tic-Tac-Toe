@@ -21,7 +21,6 @@
 		</Compiler>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
-			<Option compile="0" />
 		</Unit>
 		<Extensions />
 	</Project>
