@@ -85,27 +85,27 @@ void table_print(char grid[3][3])
     printf(eline);
 }
 
-int playerinput()
+int player_input(char *p_grid)
 {
     // control variables
     int convarx = 0;
     int convary = 0;
-    // defineinput varialbes
+    // define input varialbes
     int x;
     char y;
     int xnum;
     int ynum;
     //int inparray[2] = {0, 0};
     // instructions
-    printf("Where would you like to put your your mark?");
-    // start of four loop
+    printf("Where would you like to put your your mark? (A,B,C) or (a,b,c)");
+    // start of input validation loop for Y
     while(convary == 0)
     {
         printf("\ny-axis: ");
         fflush(stdin);
         //y = getchar();
         scanf("%c", &y);
-        //formats character to upper for consistancy
+        //formats character to upper for consistency
         // switch case to input variable to get a grid address
         switch(y)
         {
@@ -128,6 +128,8 @@ int playerinput()
                 printf("error unknown value please try again");
         }
     }
+    // start of input validation loop for X
+    printf("Where would you like to put your your mark? (1,2,3)");
     while (convarx == 0)
     {
         printf("\nx-axis: ");
@@ -152,6 +154,7 @@ int playerinput()
         }
     }
     int inparray[2] = {xnum , ynum};
+    printf("\n xnum:%d |ynum:%d \n", xnum, ynum);
     return inparray;
 }
 
@@ -164,14 +167,23 @@ int main()
 {
     // Grid array for users to input
     char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+    char *p_grid = &grid;
+    printf("%p", p_grid);
     //turn varaible
     int turns = 1;
     // win variable
     int winvar = 0;
     //
 
-    printf("\nIn order to play you will be promted to write two values. The first should be a letter corrsponding letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
-    table_print(grid);
-    printf("\n");
-    char gridput = playerinput();
+    do {
+        printf("\nIn order to play you will be promted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
+        table_print(grid);
+        printf("\n");
+        char gridput = player_input(p_grid);
+        //printf("\n xnum:%d |ynum:%d \n", gridput[0], gridput[1]);
+
+        /* Check for win, change winvar to 1 to leave game loop */
+
+    } while (winvar != 1);
+
 }
