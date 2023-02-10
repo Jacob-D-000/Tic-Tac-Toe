@@ -53,6 +53,7 @@ void table_print(char grid[3][3])
             {
                 // if the value is X
                 if (grid[k][j] == 'x')
+                {
                     if (i == 0 || i == 4 || i == 8 )
                         printf("%s|", X[0] );
                     else if (i == 1 || i == 5 || i == 9)
@@ -64,6 +65,7 @@ void table_print(char grid[3][3])
                     // if top or bottom of cell
                     else
                         printf("%s|",X[2]);
+                }
                 // if the value is o
                 else if (grid[k][j] == 'o')
                     if (i == 0 || i == 4 || i == 8 )
@@ -91,59 +93,65 @@ int playerinput()
     // defineinput varialbes
     int x;
     char y;
-    char yupper[1];
+    int xnum;
     int ynum;
     //int inparray[2] = {0, 0};
     // instructions
-    printf("Where would you like to put your your mark?\n");
+    printf("Where would you like to put your your mark?");
     // start of four loop
     while(convary == 0)
     {
-        printf("y-axis: ");
+        printf("\ny-axis: ");
         fflush(stdin);
-        yupper = getchar();
-        // formats character to lower for consistancy
-        //yupper = toupper(y);
-        printf("%c", yupper);
-        if (yupper == 'A' || yupper == 'B' || yupper == 'C')
+        //y = getchar();
+        scanf("%c", &y);
+        //formats character to upper for consistancy
+        // switch case to input variable to get a grid address
+        switch(y)
         {
-            if(y == 'a')
-                y = 0;
-            else if(y == 'b')
-                y = 1;
-            // if y = c
-            else
-                y = 2;
-            convary++;
-        }
-        // if valid input
-        else
-        {
-            printf("error unknown value please try again");
+            case 'A':
+            case 'a':
+                ynum = 0;
+                convary ++;
+                break;
+            case 'B':
+            case 'b':
+                ynum = 1;
+                convary ++;
+                break;
+            case 'C':
+            case 'c':
+                ynum = 2;
+                convary ++;
+                break;
+            default:
+                printf("error unknown value please try again");
         }
     }
     while (convarx == 0)
     {
-        printf("x-axis: ");
-        //fflush(stdin);
-        //x = get
-
-        x = toupper(x);
-        if(x != 1 || x != 2 || x != 3)
-            printf("error unknown value please try again.\n");
-        else
+        printf("\nx-axis: ");
+        fflush(stdin);
+        scanf("%d", &x);
+        switch(x)
         {
-            if(x == 1)
-                x = 0;
-            else if(x == 2)
-                x = 1;
-            // if x = 3
-            else
-                x = 2;
+            case 1:
+                xnum = 0;
+                convarx ++;
+                break;
+            case 2:
+                xnum = 1;
+                convarx ++;
+                break;
+            case 3:
+                xnum = 2;
+                convarx ++;
+                break;
+            default:
+                printf("error unknown value please try again");
         }
-            convarx ++;
     }
-    int inparray[2] = {x , y};
+    int inparray[2] = {xnum , ynum};
     return inparray;
 }
 
@@ -166,6 +174,4 @@ int main()
     table_print(grid);
     printf("\n");
     char gridput = playerinput();
-
-
 }
