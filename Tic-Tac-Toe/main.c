@@ -161,9 +161,6 @@ int grid_input(int *gridput, char (*p_grid)[3], int turn)
     // varaibles to pop values out of the grid
     int y;
     int x;
-    //int i;
-    //for (i = 0; i < 3; i++)
-
     y = *(gridput + 0);
     x = *(gridput + 1);
     printf("Y: %d\n", y);
@@ -192,6 +189,31 @@ int grid_input(int *gridput, char (*p_grid)[3], int turn)
     }
 }
 
+// define the function to test whether its a win or not at the end of mains do ... while
+int win_check(char grid[3][3])
+{
+    int winvar;
+    if(grid[0][0] == grid[0][1] && grid[0][1] == grid[0][2] && grid[0][0] != ' ' && grid[0][1] != ' ' && grid[0][2] != ' ')
+        winvar = 1;
+    else if(grid[1][0] == grid[1][1] && grid[1][1] == grid[1][2] && grid[1][0]  != ' ' && grid[1][1] != ' ' && grid[1][2] != ' ')
+        winvar = 1;
+    else if(grid[2][0] == grid[2][1] && grid[2][1] == grid[2][2] && grid[2][0] != ' ' && grid[2][1] != ' ' && grid[2][2] != ' ')
+        winvar = 1;
+    else if(grid[0][0] == grid[1][0] && grid[1][0] == grid[2][0] && grid[0][0] != ' ' && grid[1][0]  != ' ' && grid[2][0]  != ' ')
+        winvar = 1;
+    else if(grid[0][1] == grid[1][1] && grid[1][1] == grid[2][1] && grid[0][1] != ' ' && grid[1][1] != ' ' && grid[02][1] != ' ')
+        winvar = 1;
+    else if(grid[0][2] == grid[1][2] && grid[1][2] == grid[2][2] && grid[0][2] != ' ' && grid[1][2] != ' ' && grid[2][2] != ' ')
+        winvar = 1;
+    else if(grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2] && grid[0][0] != ' ' && grid[1][1] != ' ' && grid[2][2] != ' ')
+        winvar = 1;
+    else if(grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0] && grid[2][0] != ' ' && grid[1][1] != ' ' && grid[2][0] != ' ')
+        winvar = 1;
+    else
+        winvar = 0;
+    return winvar;
+}
+
 int main()
 {
     char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
@@ -201,19 +223,14 @@ int main()
     // win variable
     int winvar = 0;
     int *p_gridput;
-    int y;
-    int x;
+    printf("\nIn order to play you will be promted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
     // gird input to go into the validadtion function
     do {
-        printf("\nIn order to play you will be promted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
         table_print(grid);
         printf("\n");
         p_gridput = player_input();
-        y = *(p_gridput + 0);
-        x = *(p_gridput + 1);
         turns = grid_input(p_gridput, grid, turns);
-        printf("\n%d\n", turns);
-        printf("%c\n", grid[y][x]);
+        winvar = win_check(grid);
         /* Check for win, change winvar to 1 to leave game loop */
     } while (winvar != 1);
 
