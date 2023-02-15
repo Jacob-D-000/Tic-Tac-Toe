@@ -81,7 +81,7 @@ void table_print(char grid[3][3])
     printf(eline);
 }
 
-int player_input(char *(p_grid[3]))
+int *player_input()
 {
     // control variables
     int convarx = 0;
@@ -91,7 +91,8 @@ int player_input(char *(p_grid[3]))
     char y;
     int xnum;
     int ynum;
-    //int inparray[2] = {0, 0};
+    // gird that is returned into at the end of function. Will contain the x and y coords.
+    static int inparray[2] = {0, 0};
     // instructions
     printf("Where would you like to put your your mark? (A,B,C) or (a,b,c)");
     // start of input validation loop for Y
@@ -149,27 +150,70 @@ int player_input(char *(p_grid[3]))
                 printf("error unknown value please try again");
         }
     }
-    *(p_grid[ynum] + xnum);
-    printf("\n xnum:%d |ynum:%d \n", xnum, ynum);
-    return 0;
+    // xnum and ynum are inputed into inparray
+    inparray[0] = ynum;
+    inparray[1] = xnum;
+    return inparray;
+}
+
+int grid_input(int *gridput, char (*p_grid)[3], int turn)
+{
+    // varaibles to pop values out of the grid
+    int y;
+    int x;
+    //int i;
+    //for (i = 0; i < 3; i++)
+
+    y = *(gridput + 0);
+    x = *(gridput + 1);
+    printf("Y: %d\n", y);
+    printf("X: %d\n", x);
+    // deinitialize pointer into varaible
+    printf("%c\n", *(p_grid[y] + x));
+    if (*(p_grid[y] + x) == ' ')
+    {
+        if (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9)
+        {
+            *(p_grid[y] + x) = 'x';
+            turn++;
+            return turn;
+        }
+        else
+        {
+            *(p_grid[y] + x) = 'o';
+            turn++;
+            return turn;
+        }
+    }
+    else
+    {
+        printf("That spot is already taken\n");
+        return turn;
+    }
 }
 
 int main()
 {
-    // Grid array for users to input
     char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
-    char (*p_grid)[3] = &grid;
-    printf("%p", p_grid);
+    //p_grid = &grid;
     //turn varaible
     int turns = 1;
     // win variable
     int winvar = 0;
-    //
+    int *p_gridput;
+    int y;
+    int x;
+    // gird input to go into the validadtion function
     do {
         printf("\nIn order to play you will be promted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
         table_print(grid);
         printf("\n");
-        char gridput = player_input(p_grid);
+        p_gridput = player_input();
+        y = *(p_gridput + 0);
+        x = *(p_gridput + 1);
+        turns = grid_input(p_gridput, grid, turns);
+        printf("\n%d\n", turns);
+        printf("%c\n", grid[y][x]);
         /* Check for win, change winvar to 1 to leave game loop */
     } while (winvar != 1);
 
