@@ -44,3 +44,5 @@ This will essentially reference a point in that array where i is the index with 
 `z = *(ptr[x] + y);`
 
 This will assign the variable z, the value of the array reference by ptr at the coords [x] [y]. These are very useful to know I and I definitely should remember them. Besides the ability to rewrite values in arrays, I have also add a function to check all possible win conditions, and allowed main to return a value to the menu that will allow the program to keep score. I've finished the actual code for the program for now, all I have to do is ready the file to become a library that will be reference in Liam's code.
+### 12:45 - 1:00pm
+After some research I was able to create a header file that can be referenced by the main function that liam has written (Look here for reference in header files: https://www.geeksforgeeks.org/write-header-file-c/). All that needs to be done now is push and merge this branch with main, and adding the header file to the main work folder.
