@@ -5,7 +5,7 @@
 **Project: Tic-Tac-Toe
 **Author: Jacob Dimoff
 **Date: 09/02/23
-**Filename: main.c (tic_tac_toe_game.c)
+**Filename: game.h
 **Purpose: Create a table for tic tac toe and allow users to input values to play
 */
 
@@ -87,7 +87,7 @@ int *player_input()
     // control variables
     int convarx = 0;
     int convary = 0;
-    // define input varialbes
+    // define input variables
     int x;
     char y;
     int xnum;
@@ -154,7 +154,7 @@ int *player_input()
                 Sleep(1000);
         }
     }
-    // xnum and ynum are inputed into inparray
+    // xnum and ynum are inputted into inparray
     inparray[0] = ynum;
     inparray[1] = xnum;
     return inparray;
@@ -162,15 +162,15 @@ int *player_input()
 
 int grid_input(int *gridput, char (*p_grid)[3], int turn)
 {
-    // varaibles to pop values out of the grid
+    // variables to pop values out of the grid
     int y;
     int x;
-    // dereference the grid input pointer into x and y. These coorspond to ynum and xnum from player_input
+    // dereference the grid input pointer into x and y. These correspond to ynum and xnum from player_input
     y = *(gridput + 0);
     x = *(gridput + 1);
     printf("Y: %d\n", y);
     printf("X: %d\n", x);
-    // deinitialize pointer into varaible for 2d array "grid"
+    // deinitialize pointer into variables for 2d array "grid"
     printf("%c\n", *(p_grid[y] + x));
     if (*(p_grid[y] + x) == ' ')
     {
@@ -232,9 +232,9 @@ char game_func()
     int *p_gridput = NULL;
     // variable that contains the value a value that determines who won
     char whoWon;
-    printf("\nIn order to play you will be promted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
+    printf("\nIn order to play you will be prompted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corresponds to a number on the x-axis.\n");
     do {
-        // gird input to go into the validadtion function
+        // gird input to go into the validation function
         table_print(grid);
         printf("\n");
         // get player input for
@@ -247,9 +247,9 @@ char game_func()
     table_print(grid);
     // subtract 1 from turn because turn is increased inside the function, causing its value to be one large then it should be
     turns--;
-    // print how many turns the game lasted. This is not nesscary for the function and can be delated
-    printf("\nThe matach was one on turn %d", turns);
-    // check to see if the winer was x or o based on the turn number. Determines what the value based on the turn number
+    // print how many turns the game lasted. This is not necessary for the function and can be deleted
+    printf("\nThe match was one on turn %d", turns);
+    // check to see if the winner was x or o based on the turn number. Determines what the value based on the turn number
     if (turns == 5 || turns == 7 || turns == 9)
         whoWon = 'x';
     else
