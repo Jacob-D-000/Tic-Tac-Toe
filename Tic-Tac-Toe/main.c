@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 /*
 **Project: Tic-Tac-Toe
 **Author: Jacob Dimoff
 **Date: 09/02/23
-**Filename: main.c (tic_tac_toe_table.c)
+**Filename: main.c (tic_tac_toe_game.c)
 **Purpose: Create a table for tic tac toe and allow users to input values to play
 */
 
@@ -94,7 +95,7 @@ int *player_input()
     // gird that is returned into at the end of function. Will contain the x and y coords.
     static int inparray[2] = {0, 0};
     // instructions
-    printf("Where would you like to put your your mark? (A,B,C) or (a,b,c)");
+    printf("Where would you like to put your your mark on the Y-axis? (A,B,C) or (a,b,c)");
     // start of input validation loop for Y
     while(convary == 0)
     {
@@ -121,12 +122,14 @@ int *player_input()
                 ynum = 2;
                 convary ++;
                 break;
+            //if value is not a, b, c, print error and execute a sleep function to give user time to process
             default:
                 printf("error unknown value please try again");
+                Sleep(1000);
         }
     }
     // start of input validation loop for X
-    printf("Where would you like to put your your mark? (1,2,3)");
+    printf("Where would you like to put your your mark on the X-axis? (1,2,3)");
     while (convarx == 0)
     {
         printf("\nx-axis: ");
@@ -148,6 +151,7 @@ int *player_input()
                 break;
             default:
                 printf("error unknown value please try again");
+                Sleep(1000);
         }
     }
     // xnum and ynum are inputed into inparray
@@ -161,11 +165,12 @@ int grid_input(int *gridput, char (*p_grid)[3], int turn)
     // varaibles to pop values out of the grid
     int y;
     int x;
+    // dereference the grid input pointer into x and y. These coorspond to ynum and xnum from player_input
     y = *(gridput + 0);
     x = *(gridput + 1);
     printf("Y: %d\n", y);
     printf("X: %d\n", x);
-    // deinitialize pointer into varaible
+    // deinitialize pointer into varaible for 2d array "grid"
     printf("%c\n", *(p_grid[y] + x));
     if (*(p_grid[y] + x) == ' ')
     {
@@ -173,20 +178,19 @@ int grid_input(int *gridput, char (*p_grid)[3], int turn)
         {
             *(p_grid[y] + x) = 'x';
             turn++;
-            return turn;
         }
         else
         {
             *(p_grid[y] + x) = 'o';
             turn++;
-            return turn;
         }
     }
+    // calls else iv grid[y][x] already contains an x or o
     else
     {
         printf("That spot is already taken\n");
-        return turn;
     }
+    return turn;
 }
 
 // define the function to test whether its a win or not at the end of mains do ... while
@@ -209,29 +213,48 @@ int win_check(char grid[3][3])
         winvar = 1;
     else if(grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0] && grid[2][0] != ' ' && grid[1][1] != ' ' && grid[2][0] != ' ')
         winvar = 1;
+    // if there is no win
     else
         winvar = 0;
     return winvar;
 }
 
-int main()
+/* Defintion of "main" This function should be renamed once this is turned into a library to be called in the menu file*/
+char main()
 {
+    // define the array used to show grid and to check for winner
     char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
-    //p_grid = &grid;
     //turn varaible
     int turns = 1;
     // win variable
     int winvar = 0;
-    int *p_gridput;
+    // create a pointer for player input array to be stored in
+    int *p_gridput = NULL;
+    // variable that contains the value a value that determines who won
+    char whoWon;
     printf("\nIn order to play you will be promted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corrisponds to a number on the x-axis.\n");
-    // gird input to go into the validadtion function
     do {
+        // gird input to go into the validadtion function
         table_print(grid);
         printf("\n");
+        // get player input for
         p_gridput = player_input();
         turns = grid_input(p_gridput, grid, turns);
+        system("cls");
         winvar = win_check(grid);
         /* Check for win, change winvar to 1 to leave game loop */
     } while (winvar != 1);
-
+    table_print(grid);
+    // subtract 1 from turn because turn is increased inside the function, causing its value to be one large then it should be
+    turns--;
+    // print how many turns the game lasted. This is not nesscary for the function and can be delated
+    printf("\nThe matach was one on turn %d", turns);
+    // check to see if the winer was x or o based on the turn number. Determines what the value based on the turn number
+    if (turns == 5 || turns == 7 || turns == 9)
+        whoWon = 'x';
+    else
+        whoWon = 'o';
+    printf("\n%c Won!", whoWon);
+    // returns the winner. This means main must return a char. Do not change unless whoWon and mains data type match.
+    return whoWon;
 }
