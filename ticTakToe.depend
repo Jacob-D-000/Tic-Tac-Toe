@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1675450158 source:c:\users\user\onedrive - nova scotia community college\documents\c\ao4\tictaktoe\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdlib.h>
+	<conio.h>
+
