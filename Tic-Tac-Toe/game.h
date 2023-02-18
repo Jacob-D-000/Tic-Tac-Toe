@@ -194,7 +194,7 @@ int grid_input(int *gridput, char (*p_grid)[3], int turn)
 }
 
 // define the function to test whether its a win or not at the end of mains do ... while
-int win_check(char grid[3][3])
+int win_check(char grid[3][3], int turns)
 {
     int winvar;
     if(grid[0][0] == grid[0][1] && grid[0][1] == grid[0][2] && grid[0][0] != ' ' && grid[0][1] != ' ' && grid[0][2] != ' ')
@@ -205,7 +205,7 @@ int win_check(char grid[3][3])
         winvar = 1;
     else if(grid[0][0] == grid[1][0] && grid[1][0] == grid[2][0] && grid[0][0] != ' ' && grid[1][0]  != ' ' && grid[2][0]  != ' ')
         winvar = 1;
-    else if(grid[0][1] == grid[1][1] && grid[1][1] == grid[2][1] && grid[0][1] != ' ' && grid[1][1] != ' ' && grid[02][1] != ' ')
+    else if(grid[0][1] == grid[1][1] && grid[1][1] == grid[2][1] && grid[0][1] != ' ' && grid[1][1] != ' ' && grid[2][1] != ' ')
         winvar = 1;
     else if(grid[0][2] == grid[1][2] && grid[1][2] == grid[2][2] && grid[0][2] != ' ' && grid[1][2] != ' ' && grid[2][2] != ' ')
         winvar = 1;
@@ -216,6 +216,7 @@ int win_check(char grid[3][3])
     // if there is no win
     else
         winvar = 0;
+
     return winvar;
 }
 
@@ -241,19 +242,27 @@ char game_func()
         p_gridput = player_input();
         turns = grid_input(p_gridput, grid, turns);
         system("cls");
-        winvar = win_check(grid);
+        winvar = win_check(grid, turns);
         /* Check for win, change winvar to 1 to leave game loop */
-    } while (winvar != 1);
+    } while (winvar != 1 || turns != 10);
     table_print(grid);
     // subtract 1 from turn because turn is increased inside the function, causing its value to be one large then it should be
     turns--;
     // print how many turns the game lasted. This is not necessary for the function and can be deleted
-    printf("\nThe match was one on turn %d", turns);
     // check to see if the winner was x or o based on the turn number. Determines what the value based on the turn number
     if (turns == 5 || turns == 7 || turns == 9)
+    {
+        printf("\nThe match was one on turn %d", turns);
         whoWon = 'x';
-    else
+    }
+    else if(turns == 6 || turns == 8)
+    {
+        printf("\nThe match was one on turn %d", turns);
         whoWon = 'o';
+    }
+    else
+        whoWon = 't';
+
     printf("\n%c Won!", whoWon);
     // returns the winner. This means main must return a char. Do not change unless whoWon and mains data type match.
     return whoWon;

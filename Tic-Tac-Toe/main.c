@@ -12,7 +12,7 @@
     /*
        note that functions Main, showstsminue, FporE, and BotSetings use the same switch formating but
        with different Arrays and values to show different outputs and get new inputs.
-       (the main commits can be used the the listed functions)
+       (the main commits can be used to explain the listed functions)
     */
 
 int main()
@@ -153,6 +153,7 @@ struct stats
     int winBvar;
     int winX;
     int winO;
+    int Tie;
     char playerName[255];
     char Pchar;
     int winPVP;
@@ -320,6 +321,7 @@ void showsts()
 
     printf("  X wins: %d\n", s1.winX);
     printf("  O wins: %d\n", s1.winO);
+    printf("  Tie games: %d\n", s1.Tie);
 
     printf("  PvP wins: %d\n\n", s1.winPVP);
     return 0;
@@ -441,8 +443,11 @@ int FPorE()
     }
     else if (menu2 == PvP)
     {
+      //run game program using PvP option
       winnerchar = game_func();
+      printf("%c", winnerchar);
       main_win_check(winnerchar);
+      main();
     }
     else if (menu2 == back)
     {
@@ -593,12 +598,6 @@ int BotSeting()
   }
 }
 
-int FPvP()
-{
-  //run game program using PvP option
-  printf("End of Program\n");
-}
-
 int menuInput()
 {
     //get user input and return value to function that it was called from
@@ -614,7 +613,20 @@ int menuInput()
 }
 
 // function to determine how to add x or o into player struct
-void main_win_check()
+void main_win_check(char winsts)
 {
+    system("cls");
 
+    if (winsts == 'x')
+    {
+        s1.winX++;
+    }
+    else if (winsts == 'o')
+    {
+        s1.winO++;
+    }
+    else if (winsts == 't')
+    {
+        s1.Tie++;
+    }
 }
