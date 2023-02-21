@@ -82,7 +82,7 @@ void table_print(char grid[3][3])
     printf(eline);
 }
 
-int *player_input()
+int *player_input(char Name1[255], char Name2[255], char Pchar, int turn)
 {
     // control variables
     int convarx = 0;
@@ -94,6 +94,25 @@ int *player_input()
     int ynum;
     // gird that is returned into at the end of function. Will contain the x and y coords.
     static int inparray[2] = {0, 0};
+    //print player Name
+    if (Pchar == 'X' || Pchar == 'O')
+    {
+        if (Pchar == 'X' && (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9))
+            printf("It is %s Turn\n", Name1);
+        else if (Pchar != 'X' && (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9))
+            printf("It is %s Turn\n", Name2);
+
+        if (Pchar == 'O' && (turn == 2 || turn == 4 || turn == 6 || turn == 8))
+            printf("It is %s Turn\n", Name1);
+        else if (Pchar != 'O' && (turn == 2 || turn == 4 || turn == 6 || turn == 8))
+            printf("It is %s Turn\n", Name2);
+    }
+    else
+        if (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9)
+            printf("It is %s Turn\n", Name1);
+        else if (turn == 2 || turn == 4 || turn == 6 || turn == 8)
+            printf("It is %s Turn\n", Name2);
+
     // instructions
     printf("Where would you like to put your your mark on the Y-axis? (A,B,C) or (a,b,c)");
     // start of input validation loop for Y
@@ -162,6 +181,7 @@ int *player_input()
 
 int grid_input(int *gridput, char (*p_grid)[3], int turn)
 {
+    //!!dont know how to call struct into game.h
     // variables to pop values out of the grid
     int y;
     int x;
@@ -223,7 +243,7 @@ int win_check(char grid[3][3], int turns)
 }
 
 /* Defintion of "main" This function should be renamed once this is turned into a library to be called in the menu file*/
-char game_func()
+char game_func(char Name1[255], char Name2[255], char Pchar)
 {
     // define the array used to show grid and to check for winner
     char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
@@ -241,7 +261,7 @@ char game_func()
         table_print(grid);
         printf("\n");
         // get player input for
-        p_gridput = player_input();
+        p_gridput = player_input(Name1, Name2, Pchar, turns);
         turns = grid_input(p_gridput, grid, turns);
         system("cls");
         winvar = win_check(grid, turns);

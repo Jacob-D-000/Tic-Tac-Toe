@@ -154,9 +154,11 @@ struct stats
     int winX;
     int winO;
     int Tie;
-    char playerName[255];
+    char player1Name[255];
+    char player2Name[255];
     char Pchar;
-    int winPVP;
+    int Player1W;
+    int Player2W;
 } s1;
 
 int showstsminue()
@@ -165,16 +167,18 @@ int showstsminue()
     int Xs = 0;
     int Os = 1;
     int User = 2;
-    int back = 3;
+    int User2 = 3;
+    int back = 4;
     char inputS;
 
     int X = 0;
     int O = 1;
 
-    char XS[255] = "-> X\nO\n\nChange Usename\nBack to menu\n";
-    char OS[255] = "X\n-> O\n\nChange Usename\nBack to menu\n";
-    char UserS[255] = "X\nO\n\n-> Change Usename\nBack to menu\n";
-    char backS[255] = "X\nO\n\nChange Usename\n-> Back to menu\n";
+    char XS[255] = "-> X\nO\n\nChange Username P1\nChange Username P2\nBack to menu\n";
+    char OS[255] = "X\n-> O\n\nChange Username P1\nChange Username P2\nBack to menu\n";
+    char UserS[255] = "X\nO\n\n-> Change Username P1\nChange Username P2\nBack to menu\n";
+    char backS[255] = "X\nO\n\nChange Username P1\nChange Username P2\n-> Back to menu\n";
+    char User2S[255] = "X\nO\n\nChange Username P1\n->  Change Username P2\nBack to menu\n";
 
     printf("||-----TIK TAC TOE-----||\n\n");
     printf("||---------STATS--------||\n");
@@ -206,8 +210,8 @@ int showstsminue()
             }
             else if (menuS == back)
             {
-                menuS = User;
-                printf("%s", UserS);
+                menuS = User2;
+                printf("%s", User2S);
             }
             else if (menuS == User)
             {
@@ -218,6 +222,11 @@ int showstsminue()
             {
                 menuS = Xs;
                 printf("%s", XS);
+            }
+            else if (menuS == User2)
+            {
+                menuS = User;
+                printf("%s", UserS);
             }
             break;
 
@@ -241,13 +250,18 @@ int showstsminue()
             }
             else if (menuS == User)
             {
-                menuS = back;
-                printf("%s", backS);
+                menuS = User2;
+                printf("%s", User2S);
             }
             else if (menuS == back)
             {
                 menuS = Xs;
                 printf("%s", XS);
+            }
+            else if (menuS == User2)
+            {
+                menuS = back;
+                printf("%s", backS);
             }
             break;
 
@@ -274,6 +288,10 @@ int showstsminue()
             else if (menuS == back)
             {
                 printf("%s", backS);
+            }
+            else if (menuS == User2)
+            {
+                printf("%s", User2S);
             }
             break;
           }
@@ -302,7 +320,13 @@ int showstsminue()
   }
   else if (menuS == User)
   {
-      getname();
+      getname1();
+      system("cls");
+      showstsminue();
+  }
+  else if (menuS == User2)
+  {
+      getname2();
       system("cls");
       showstsminue();
   }
@@ -313,7 +337,8 @@ void showsts()
 {
     //called in showstsminue
     //prints all stats and player name and if they are X or O
-    printf("  You are: %s\n", s1.playerName);
+    printf("  You are: %s\n", s1.player1Name);
+    printf("  Player 2 is: %s\n", s1.player2Name);
     printf("  you are playing as %c\n\n", s1.Pchar);
 
     printf("  Player wins: %d\n", s1.winPvar);
@@ -323,21 +348,32 @@ void showsts()
     printf("  O wins: %d\n", s1.winO);
     printf("  Tie games: %d\n", s1.Tie);
 
-    printf("  PvP wins: %d\n\n", s1.winPVP);
+    printf("  %s wins: %d\n\n", s1.player1Name, s1.Player1W);
+    printf("  %s wins: %d\n\n", s1.player2Name, s1.Player2W);
     return 0;
 }
 
-int getname()
+int getname2()
 {
     //called if user enters change User name in showstsminue
-    //changes playerName value in struct using user input
-    char input;
+    //changes playerName value in struct using user input for user 2
     printf("type your name:");
 
     fflush(stdin);
-    s1.playerName[255];
-    gets(s1.playerName);
-    return s1.playerName;
+    s1.player2Name[255];
+    gets(s1.player2Name);
+    return s1.player2Name;
+}
+int getname1()
+{
+    //called if user enters change User name in showstsminue
+    //changes playerName value in struct using user input for user 1
+    printf("type your name:");
+
+    fflush(stdin);
+    s1.player1Name[255];
+    gets(s1.player1Name);
+    return s1.player1Name;
 }
 
 int FPorE()
@@ -444,9 +480,8 @@ int FPorE()
     else if (menu2 == PvP)
     {
       //run game program using PvP option
-      winnerchar = game_func();
-      printf("%c", winnerchar);
-      main_win_check(winnerchar);
+      winnerchar = game_func(s1.player1Name, s1.player2Name, s1.Pchar);
+      main_win_check(winnerchar, menu2);
       main();
     }
     else if (menu2 == back)
@@ -613,20 +648,37 @@ int menuInput()
 }
 
 // function to determine how to add x or o into player struct
-void main_win_check(char winsts)
+void main_win_check(char winsts, char PE)
 {
     system("cls");
+    if (PE == 1)
+    {
+        if (winsts == 'x')
+        {
+            s1.winX++;
+            if (s1.Pchar == 'X')
+            {
+                s1.Player1W++;
+            }
+            else
+                s1.Player2W++;
+        }
+        else if (winsts == 'o')
+        {
+            s1.winO++;
+            if (s1.Pchar == 'X')
+            {
+                s1.Player1W++;
+            }
+            else
+                s1.Player2W++;
+        }
+        else if (winsts == 't')
+        {
+            s1.Tie++;
+        }
 
-    if (winsts == 'x')
-    {
-        s1.winX++;
     }
-    else if (winsts == 'o')
-    {
-        s1.winO++;
-    }
-    else if (winsts == 't')
-    {
-        s1.Tie++;
-    }
+    else
+        printf("No AI yet");
 }
