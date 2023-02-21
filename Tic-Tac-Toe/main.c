@@ -666,7 +666,7 @@ void main_win_check(char winsts, char PE)
         else if (winsts == 'o')
         {
             s1.winO++;
-            if (s1.Pchar == 'X')
+            if (s1.Pchar == 'O')
             {
                 s1.Player1W++;
             }
@@ -682,3 +682,4 @@ void main_win_check(char winsts, char PE)
     else
         printf("No AI yet");
 }
+

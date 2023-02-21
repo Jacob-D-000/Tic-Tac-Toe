@@ -98,20 +98,20 @@ int *player_input(char Name1[255], char Name2[255], char Pchar, int turn)
     if (Pchar == 'X' || Pchar == 'O')
     {
         if (Pchar == 'X' && (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9))
-            printf("It is %s Turn\n", Name1);
+            printf("\nIt is %s Turn! As X\n", Name1);
         else if (Pchar != 'X' && (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9))
-            printf("It is %s Turn\n", Name2);
+            printf("\nIt is %s Turn! As O\n", Name2);
 
         if (Pchar == 'O' && (turn == 2 || turn == 4 || turn == 6 || turn == 8))
-            printf("It is %s Turn\n", Name1);
+            printf("\nIt is %s Turn! As O\n", Name1);
         else if (Pchar != 'O' && (turn == 2 || turn == 4 || turn == 6 || turn == 8))
-            printf("It is %s Turn\n", Name2);
+            printf("\nIt is %s Turn! AS X\n", Name2);
     }
     else
         if (turn == 1 || turn == 3 || turn == 5 || turn == 7 || turn == 9)
-            printf("It is %s Turn\n", Name1);
+            printf("\nIt is %s Turn! As X\n", Name1);
         else if (turn == 2 || turn == 4 || turn == 6 || turn == 8)
-            printf("It is %s Turn\n", Name2);
+            printf("\nIt is %s Turn! As O\n", Name2);
 
     // instructions
     printf("Where would you like to put your your mark on the Y-axis? (A,B,C) or (a,b,c)");
@@ -121,7 +121,7 @@ int *player_input(char Name1[255], char Name2[255], char Pchar, int turn)
         printf("\ny-axis: ");
         fflush(stdin);
         //y = getchar();
-        scanf("%c", &y);
+        y = getch();
         //formats character to upper for consistency
         // switch case to input variable to get a grid address
         switch(y)
@@ -130,46 +130,53 @@ int *player_input(char Name1[255], char Name2[255], char Pchar, int turn)
             case 'a':
                 ynum = 0;
                 convary ++;
+                printf("%c", y);
                 break;
             case 'B':
             case 'b':
                 ynum = 1;
                 convary ++;
+                printf("%c", y);
                 break;
             case 'C':
             case 'c':
                 ynum = 2;
                 convary ++;
+                printf("%c", y);
                 break;
             //if value is not a, b, c, print error and execute a sleep function to give user time to process
             default:
-                printf("error unknown value please try again");
+                printf("\nerror unknown value please try again");
                 Sleep(1000);
         }
     }
     // start of input validation loop for X
-    printf("Where would you like to put your your mark on the X-axis? (1,2,3)");
+    printf("\nWhere would you like to put your your mark on the X-axis? (1,2,3)");
+    printf("\nOr press r to change Y-axis.");
     while (convarx == 0)
     {
         printf("\nx-axis: ");
         fflush(stdin);
-        scanf("%d", &x);
+        x = getch();
         switch(x)
         {
-            case 1:
+            case '1':
                 xnum = 0;
                 convarx ++;
                 break;
-            case 2:
+            case '2':
                 xnum = 1;
                 convarx ++;
                 break;
-            case 3:
+            case '3':
                 xnum = 2;
                 convarx ++;
                 break;
+            case 'r':
+                player_input(Name1, Name2, Pchar, turn);
+                break;
             default:
-                printf("error unknown value please try again");
+                printf("\nerror unknown value please try again");
                 Sleep(1000);
         }
     }
@@ -255,7 +262,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
     int *p_gridput = NULL;
     // variable that contains the value a value that determines who won
     char whoWon;
-    printf("\nIn order to play you will be prompted to write two values. The first should be a letter corresponding  letter on the y-axis. Then you will type a number that corresponds to a number on the x-axis.\n");
+    printf("\nIn order to play you will be prompted to write two values. The first should be a letter corresponding  \nletter on the y-axis. Then you will type a number that corresponds to a number on the x-axis.\n");
     do {
         // gird input to go into the validation function
         table_print(grid);
@@ -265,7 +272,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
         turns = grid_input(p_gridput, grid, turns);
         system("cls");
         winvar = win_check(grid, turns);
-        printf("\n-----%d-------\n", turns);
+        printf("\n     ||-----%d-----||\n", turns);
         /* Check for win, change winvar to 1 to leave game loop */
     } while (winvar <= 0);
     table_print(grid);
@@ -273,18 +280,43 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
     turns--;
     // print how many turns the game lasted. This is not necessary for the function and can be deleted
     // check to see if the winner was x or o based on the turn number. Determines what the value based on the turn number
-    if (winvar == 2)
-        whoWon = 't';
-    else if (turns == 5 || turns == 7 || turns == 9)
+    do
     {
-        printf("\nThe match was one on turn %d", turns);
-        whoWon = 'x';
-    }
-    else if(turns == 6 || turns == 8)
-    {
-        printf("\nThe match was one on turn %d", turns);
-        whoWon = 'o';
-    }
+        if (winvar == 2)
+        {
+            whoWon = 't';
+            printf("Game was a Tie");
+        }
+        else if (turns == 5 || turns == 7 || turns == 9)
+        {
+            if (Pchar == 'X' || Pchar != 'X' || Pchar != 'O')
+            {
+                printf("\n%s won the match on turn %d as X", Name1, turns);
+                whoWon = 'x';
+            }
+            else
+            {
+                printf("\n%s won the match on turn %d as X", Name2, turns);
+                whoWon = 'x';
+            }
+        }
+        else if(turns == 6 || turns == 8)
+        {
+            if (Pchar == 'O')
+            {
+                printf("\n%s won the match on turn %d as O", Name1, turns);
+                whoWon = 'o';
+            }
+            else
+            {
+                printf("\n%s won the match on turn %d as O", Name2, turns);
+                whoWon = 'o';
+            }
+        }
+        printf("\npress anywhere to return to menu");
+    }while(!getch());
+
+
     // returns the winner. This means main must return a char. Do not change unless whoWon and mains data type match.
     return whoWon;
 }
