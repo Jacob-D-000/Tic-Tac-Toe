@@ -258,3 +258,9 @@ char game_func()
     // returns the winner. This means main must return a char. Do not change unless whoWon and mains data type match.
     return whoWon;
 }
+
+/* COMMENT ME OUT IF NOT TESTING */
+int main(void) {
+    game_func();
+    return 6942069;
+}

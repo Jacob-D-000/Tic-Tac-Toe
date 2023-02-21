@@ -10,140 +10,12 @@
     //s = 115
 
     /*
-       note that functions Main, showstsminue, FporE, and BotSetings use the same switch formating but
+       note that functions Main, showstsmenu, FporE, and BotSettings use the same switch formating but
        with different Arrays and values to show different outputs and get new inputs.
        (the main commits can be used to explain the listed functions)
     */
 
-int main()
-{
-    //values for menu options and user input
-    int menu;
-    int play = 0;
-    int rules = 1;
-    int exit = 2;
-    int stats = 3;
-    char input;
 
-    //Array and text for each main menu screen and input directions
-    char rulesS[255] = "Play\n-> Rules\nStats\nExit\n";
-    char exitS[255] = "Play\nRules\nStats\n-> Exit\n";
-    char playS[255] = "-> Play\nRules\nStats\nExit\n";
-    char statsS[255] = "Play\nRules\n-> Stats\nExit\n";
-    menu = play;
-    printf("||-----TIK TAC TOE-----||\n\n");
-    printf("||---------MENU--------||\n");
-    printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n\n");
-    printf("%s",playS);
-    do
-    {
-        //calls user input Function then put input in switch
-        input = menuInput(input);
-        switch(input)
-        {
-            /*
-             Case W: if user press w cycle through Arrays going up based on current displayed Array
-             Case S: if user press s cycle through Arrays going down based on current displayed Array
-             for each input set menu value equal to current Array name
-
-             For improper input clear screen and print current Array and show error
-
-             If user press enter run function related to the menu value
-            */
-
-        case 'w':
-            system("cls");
-            printf("||-----TIK TAC TOE-----||\n\n");
-            printf("||---------MENU--------||\n");
-            printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n\n");
-            if (menu == play)
-            {
-                menu = exit;
-                printf("%s", exitS);
-            }
-            else if (menu == rules)
-            {
-                menu = play;
-                printf("%s", playS);
-            }
-            else if (menu == exit)
-            {
-                menu = stats;
-                printf("%s", statsS);
-            }
-            else if (menu == stats)
-            {
-                menu = rules;
-                printf("%s", rulesS);
-            }
-            break;
-
-          case 's':
-            system("cls");
-            printf("||-----TIK TAC TOE-----||\n\n");
-            printf("||---------MENU--------||\n");
-            printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n\n");
-            if (menu == play)
-            {
-                menu = rules;
-                printf("%s", rulesS);
-            }
-            else if (menu == rules)
-            {
-                menu = stats;
-                printf("%s", statsS);
-            }
-            else if (menu == exit)
-            {
-                menu = play;
-                printf("%s", playS);
-            }
-            else if (menu == stats)
-            {
-                menu = exit;
-                printf("%s", exitS);
-            }
-            break;
-
-          default:
-            system("cls");
-            printf("||-----TIK TAC TOE-----||\n\n");
-            printf("||---------MENU--------||\n");
-            printf("!!---it didnt work---!!\n");
-            printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n\n");
-            if (menu == play)
-            {
-                printf("%s", playS);
-            }
-            else if (menu == rules)
-            {
-                printf("%s", rulesS);
-            }
-            else if (menu == exit)
-            {
-                printf("%s", exitS);
-            }
-            else if (menu == stats)
-            {
-                printf("%s", statsS);
-            }
-            break;
-          }
-      }while (input != 13);
-        system("cls");
-        if (menu == play)
-        {
-            FPorE();
-        }
-        else if (menu == rules)
-        {
-            FRules();
-        }
-        else if (menu == stats)
-        {
-            showstsminue();
-        }
-}
 
 struct stats
 {
@@ -159,9 +31,112 @@ struct stats
     char Pchar;
     int Player1W;
     int Player2W;
+
 } s1;
 
-int showstsminue()
+void showsts()
+{
+    //called in showstsmenu
+    //prints all stats and player name and if they are X or O
+    printf("  You are: %s\n", s1.player1Name);
+    printf("  Player 2 is: %s\n", s1.player2Name);
+    printf("  you are playing as %c\n\n", s1.Pchar);
+
+    printf("  Player wins: %d\n", s1.winPvar);
+    printf("  Bot wins: %d\n", s1.winBvar);
+
+    printf("  X wins: %d\n", s1.winX);
+    printf("  O wins: %d\n", s1.winO);
+    printf("  Tie games: %d\n", s1.Tie);
+
+    printf("  %s wins: %d\n\n", s1.player1Name, s1.Player1W);
+    printf("  %s wins: %d\n\n", s1.player2Name, s1.Player2W);
+}
+
+int menuInput()
+{
+    //get user input and return value to function that it was called from
+    char input;
+
+    fflush(stdin);
+    input = getch();
+    if (input == '\n')
+    {
+        system("cls");
+    }
+    return input;
+}
+
+//int
+char* getname1()
+{
+    //called if user enters change User name in showstsminue
+    //changes playerName value in struct using user input for user 1
+    printf("type your name:");
+
+    fflush(stdin);
+    // s1.player1Name[255];
+    gets(s1.player1Name);
+    return s1.player1Name;
+}
+
+//int
+char* getname2()
+{
+    //called if user enters change User name in showstsminue
+    //changes playerName value in struct using user input for user 2
+    printf("type your name:");
+
+    fflush(stdin);
+    //s1.player2Name[255];
+    gets(s1.player2Name);
+    return s1.player2Name;
+}
+
+// function to determine how to add x or o into player struct
+void main_win_check(char winsts, char PE)
+{
+    system("cls");
+    if (PE == 1)
+    {
+        if (winsts == 'x')
+        {
+            s1.winX++;
+            if (s1.Pchar == 'X')
+            {
+                s1.Player1W++;
+            }
+            else
+                s1.Player2W++;
+        }
+        else if (winsts == 'o')
+        {
+            s1.winO++;
+            if (s1.Pchar == 'O')
+            {
+                s1.Player1W++;
+            }
+            else
+                s1.Player2W++;
+        }
+        else if (winsts == 't')
+        {
+            s1.Tie++;
+        }
+
+    }
+    else
+        printf("No AI yet");
+}
+void printstsmenu() {
+    printf("||-----TIK TAC TOE-----||\n\n");
+    printf("||---------STATS--------||\n");
+    printf("||----View all Stats----||\n");
+    printf("Print w to go up and s to go down and enter to use options and confirm input\n");
+    printf("Press enter on X or O to play as that character and Change Name to change your Username\n\n");
+}
+
+void showstsmenu()
 {
     int menuS;
     int Xs = 0;
@@ -171,37 +146,26 @@ int showstsminue()
     int back = 4;
     char inputS;
 
-    int X = 0;
-    int O = 1;
-
     char XS[255] = "-> X\nO\n\nChange Username P1\nChange Username P2\nBack to menu\n";
     char OS[255] = "X\n-> O\n\nChange Username P1\nChange Username P2\nBack to menu\n";
     char UserS[255] = "X\nO\n\n-> Change Username P1\nChange Username P2\nBack to menu\n";
     char backS[255] = "X\nO\n\nChange Username P1\nChange Username P2\n-> Back to menu\n";
     char User2S[255] = "X\nO\n\nChange Username P1\n->  Change Username P2\nBack to menu\n";
 
-    printf("||-----TIK TAC TOE-----||\n\n");
-    printf("||---------STATS--------||\n");
-    printf("||--Look at over all Stats\n");
-    printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-    printf("press enter on X or O to play as that character and Change Name to change your Username\n\n");
+    printstsmenu();
 
     menuS = Xs;
-    showsts(s1);
+    showsts();
     printf("%s", XS);
 
     do
     {
-        inputS = menuInput(inputS);
+        inputS = menuInput();
         switch(inputS)
         {
           case 'w':
             system("cls");
-            printf("||-----TIK TAC TOE-----||\n\n");
-            printf("||---------STATS--------||\n");
-            printf("||--Look at over all Stats\n");
-            printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-            printf("press enter on X or O to play as that character and Change Name to change your Username\n\n");
+            printstsmenu();
             showsts();
             if (menuS == Xs)
             {
@@ -232,12 +196,8 @@ int showstsminue()
 
           case 's':
             system("cls");
-            printf("||-----TIK TAC TOE-----||\n\n");
-            printf("||---------STATS--------||\n");
-            printf("||--Look at over all Stats\n");
-            printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-            printf("press enter on X or O to play as that character and Change Name to change your Username\n\n");
-            showsts(s1);
+            printstsmenu();
+            showsts();
             if (menuS == Xs)
             {
                 menuS = Os;
@@ -267,12 +227,8 @@ int showstsminue()
 
           default:
             system("cls");
-            printf("||-----TIK TAC TOE-----||\n\n");
-            printf("||---------STATS--------||\n");
-            printf("||--Look at over all Stats\n");
-            printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-            printf("press enter on X or O to play as that character and Change Name to change your Username\n\n");
-            showsts(s1);
+            printstsmenu();
+            showsts();
             if (menuS == Xs)
             {
                 printf("%s", XS);
@@ -303,7 +259,7 @@ int showstsminue()
       fflush(stdin);
       s1.Pchar = 'X';
       system("cls");
-      showstsminue();
+      showstsmenu();
   }
   else if (menuS == Os)
   {
@@ -311,7 +267,7 @@ int showstsminue()
       fflush(stdin);
       s1.Pchar = 'O';
       system("cls");
-      showstsminue();
+      showstsmenu();
   }
   else if (menuS == back)
   {
@@ -322,61 +278,26 @@ int showstsminue()
   {
       getname1();
       system("cls");
-      showstsminue();
+      showstsmenu();
   }
   else if (menuS == User2)
   {
       getname2();
       system("cls");
-      showstsminue();
+      showstsmenu();
   }
 
 }
 
-void showsts()
-{
-    //called in showstsminue
-    //prints all stats and player name and if they are X or O
-    printf("  You are: %s\n", s1.player1Name);
-    printf("  Player 2 is: %s\n", s1.player2Name);
-    printf("  you are playing as %c\n\n", s1.Pchar);
-
-    printf("  Player wins: %d\n", s1.winPvar);
-    printf("  Bot wins: %d\n", s1.winBvar);
-
-    printf("  X wins: %d\n", s1.winX);
-    printf("  O wins: %d\n", s1.winO);
-    printf("  Tie games: %d\n", s1.Tie);
-
-    printf("  %s wins: %d\n\n", s1.player1Name, s1.Player1W);
-    printf("  %s wins: %d\n\n", s1.player2Name, s1.Player2W);
-    return 0;
+void printFPorEmenu() {
+    printf("||-----TIK TAC TOE-----||\n\n");
+    printf("||----Play Options-----||\n");
+    printf("||---SELECT YOUR MODE--||\n");
+    printf("||-print w to go up and s to go down and enter to use options and confirm input-|\n");
 }
 
-int getname2()
-{
-    //called if user enters change User name in showstsminue
-    //changes playerName value in struct using user input for user 2
-    printf("type your name:");
 
-    fflush(stdin);
-    s1.player2Name[255];
-    gets(s1.player2Name);
-    return s1.player2Name;
-}
-int getname1()
-{
-    //called if user enters change User name in showstsminue
-    //changes playerName value in struct using user input for user 1
-    printf("type your name:");
-
-    fflush(stdin);
-    s1.player1Name[255];
-    gets(s1.player1Name);
-    return s1.player1Name;
-}
-
-int FPorE()
+void FPorE()
 {
   int menu2;
   int PvE = 0;
@@ -392,23 +313,17 @@ int FPorE()
   char input2;
 
   menu2 = PvE;
-  printf("||-----TIK TAC TOE-----||\n\n");
-  printf("||----Play Options-----||\n");
-  printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-  printf("||--what mode do you want--||\n\n");
+  printFPorEmenu();
   printf("%s",PvES);
 
     do
       {
-      input2 = menuInput(input2);
+      input2 = menuInput();
       switch(input2)
       {
       case 'w':
         system("cls");
-        printf("||-----TIK TAC TOE-----||\n\n");
-        printf("||----Play Options-----||\n");
-        printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-        printf("||--what mode do you want--||\n\n");
+        printFPorEmenu();
         if (menu2 == PvE)
         {
             menu2 = back;
@@ -428,10 +343,7 @@ int FPorE()
 
       case 's':
         system("cls");
-        printf("||-----TIK TAC TOE-----||\n\n");
-        printf("||----Play Options-----||\n");
-        printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-        printf("||--what mode do you want--||\n\n");
+        printFPorEmenu();
         if (menu2 == PvE)
         {
             menu2 = PvP;
@@ -451,11 +363,8 @@ int FPorE()
 
       default:
         system("cls");
-        printf("||-----TIK TAC TOE-----||\n\n");
-        printf("||----Play Options-----||\n");
-        printf("!!---it didnt work---!!\n");
-        printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
-        printf("||--what mode do you want--||\n\n");
+        printFPorEmenu();
+        printf("!!---it didn't work---!!\n");
         if (menu2 == PvE)
         {
             printf("%s", PvES);
@@ -475,7 +384,7 @@ int FPorE()
 
     if (menu2 == PvE)
     {
-        BotSeting();
+        BotSetting(); //BotSetting will call game_func
     }
     else if (menu2 == PvP)
     {
@@ -491,18 +400,24 @@ int FPorE()
 
 }
 
-int FRules()
+void FRules()
 {
  //display game rules, if user press any key it will clear screen and run main
   do
   {
-   printf("1. The game is played on a grid that's 3 squares by 3 squares.\n2. You are X, your friend (or the computer) is O. Players take turns putting their marks in empty squares.\n3. The first player to get 3 of there marks in a row (up, down, across, or diagonally) is the winner.\n4. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.\n ||--press enter to go beck to menu--||\n");
+   printf("1. The game is played on a grid that's 3 squares by 3 squares.\n2. You are X, your friend (or the computer) is O. Players take turns putting their marks in empty squares.\n3. The first player to get 3 of there marks in a row (up, down, across, or diagonally) is the winner.\n4. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.\n ||--press enter to go back to menu--||\n");
   }while (!getch());
   system("cls");
   main();
 }
 
-int BotSeting()
+void printBotSettingmenu() {
+    printf("||-----TIK TAC TOE-----||\n\n");
+    printf("||----Bot Difficulty-----||\n");
+    printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
+}
+
+void BotSetting()
 {
   int menu3;
   int Easy = 0;
@@ -511,7 +426,7 @@ int BotSeting()
   int back = 3;
 
   char EasyS[255] = "||--Easy: Good for beginners to learn the basics of the game--||\n\n-> Easy\nMedium\nHard\nBack\n";
-  char MediumS[255] = "||--Medium: A fun chalenge--||\n\nEasy\n-> Medium\nHard\nBack\n";
+  char MediumS[255] = "||--Medium: A fun challenge--||\n\nEasy\n-> Medium\nHard\nBack\n";
   char HardS[255] = "||--Hard: The most challenging. Face Me MORTAL--||\n\nEasy\nMedium\n-> Hard\nBack\n";
   char BackS[255] = "\nEasy\nMedium\nHard\n-> Back\n";
 
@@ -519,22 +434,18 @@ int BotSeting()
 
   int dif;
   menu3 = Easy;
-  printf("||-----TIK TAC TOE-----||\n\n");
-  printf("||----Bot Diffculty-----||\n");
-  printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
+  printBotSettingmenu();
   printf("%s",EasyS);
 
     do
       {
-      input3 = menuInput(input3);
+      input3 = menuInput();
 
       switch(input3)
       {
       case 'w':
         system("cls");
-        printf("||-----TIK TAC TOE-----||\n\n");
-        printf("||----Bot Difficlty-----||\n");
-        printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
+        printBotSettingmenu();
         if (menu3 == Easy)
         {
             menu3 = back;
@@ -559,9 +470,7 @@ int BotSeting()
 
       case 's':
         system("cls");
-        printf("||-----TIK TAC TOE-----||\n\n");
-        printf("||----Bot Difficlty-----||\n");
-        printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
+        printBotSettingmenu();
         if (menu3 == Easy)
         {
             menu3 = Medium;
@@ -586,10 +495,8 @@ int BotSeting()
 
       default:
         system("cls");
-        printf("||-----TIK TAC TOE-----||\n\n");
-        printf("||----Bot Difficlty-----||\n");
-        printf("!!---it didnt work---!!\n");
-        printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
+        printBotSettingmenu();
+        printf("!!---it didn't work---!!\n");
         if (menu3 == Easy)
         {
             printf("%s", EasyS);
@@ -633,53 +540,129 @@ int BotSeting()
   }
 }
 
-int menuInput()
+void printmainmenu() {
+    printf("||-----TIK TAC TOE-----||\n\n");
+    printf("||---------MENU--------||\n");
+    printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n\n");
+}
+int main()
 {
-    //get user input and return value to function that it was called from
+    //values for menu options and user input
+    int menu;
+    int play = 0;
+    int rules = 1;
+    int exit = 2;
+    int stats = 3;
     char input;
 
-    fflush(stdin);
-    input = getch();
-    if (input == '\n')
+    //Array and text for each main menu screen and input directions
+    char rulesS[255] = "Play\n-> Rules\nStats\nExit\n";
+    char exitS[255] = "Play\nRules\nStats\n-> Exit\n";
+    char playS[255] = "-> Play\nRules\nStats\nExit\n";
+    char statsS[255] = "Play\nRules\n-> Stats\nExit\n";
+    menu = play;
+    printmainmenu();
+    printf("%s",playS);
+    do
     {
+        //calls user input Function then put input in switch
+        input = menuInput();
+        switch(input)
+        {
+            /*
+             Case W: if user press w cycle through Arrays going up based on current displayed Array
+             Case S: if user press s cycle through Arrays going down based on current displayed Array
+             for each input set menu value equal to current Array name
+
+             For improper input clear screen and print current Array and show error
+
+             If user press enter run function related to the menu value
+            */
+
+        case 'w':
+            system("cls");
+            printmainmenu();
+            if (menu == play)
+            {
+                menu = exit;
+                printf("%s", exitS);
+            }
+            else if (menu == rules)
+            {
+                menu = play;
+                printf("%s", playS);
+            }
+            else if (menu == exit)
+            {
+                menu = stats;
+                printf("%s", statsS);
+            }
+            else if (menu == stats)
+            {
+                menu = rules;
+                printf("%s", rulesS);
+            }
+            break;
+
+          case 's':
+            system("cls");
+            printmainmenu();
+            if (menu == play)
+            {
+                menu = rules;
+                printf("%s", rulesS);
+            }
+            else if (menu == rules)
+            {
+                menu = stats;
+                printf("%s", statsS);
+            }
+            else if (menu == exit)
+            {
+                menu = play;
+                printf("%s", playS);
+            }
+            else if (menu == stats)
+            {
+                menu = exit;
+                printf("%s", exitS);
+            }
+            break;
+
+          default:
+            system("cls");
+            printmainmenu();
+            printf("!!---it didnt work---!!\n");
+            if (menu == play)
+            {
+                printf("%s", playS);
+            }
+            else if (menu == rules)
+            {
+                printf("%s", rulesS);
+            }
+            else if (menu == exit)
+            {
+                printf("%s", exitS);
+            }
+            else if (menu == stats)
+            {
+                printf("%s", statsS);
+            }
+            break;
+          }
+      }while (input != 13);
         system("cls");
-    }
-    return input;
+        if (menu == play)
+        {
+            FPorE();
+        }
+        else if (menu == rules)
+        {
+            FRules();
+        }
+        else if (menu == stats)
+        {
+            showstsmenu();
+        }
 }
-
-// function to determine how to add x or o into player struct
-void main_win_check(char winsts, char PE)
-{
-    system("cls");
-    if (PE == 1)
-    {
-        if (winsts == 'x')
-        {
-            s1.winX++;
-            if (s1.Pchar == 'X')
-            {
-                s1.Player1W++;
-            }
-            else
-                s1.Player2W++;
-        }
-        else if (winsts == 'o')
-        {
-            s1.winO++;
-            if (s1.Pchar == 'O')
-            {
-                s1.Player1W++;
-            }
-            else
-                s1.Player2W++;
-        }
-        else if (winsts == 't')
-        {
-            s1.Tie++;
-        }
-
-    }
-    else
-        printf("No AI yet");
-}
-
