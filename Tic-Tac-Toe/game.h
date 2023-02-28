@@ -13,8 +13,8 @@
 // This function allows for the screen to be cleared on both windows and linux with 1 command.
 void screenClear() {
     fflush(stdin);
-    #ifdef OS_Windows
-    screenClear();
+    #ifdef __WIN32
+    system("cls");
 
     #else
     system("clear");
@@ -263,7 +263,7 @@ int win_check(char grid[3][3], int turns)
 }
 
 /* Defintion of "main" This function should be renamed once this is turned into a library to be called in the menu file*/
-char game_func(char Name1[255], char Name2[255], char Pchar)
+char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
 {
     // define the array used to show grid and to check for winner
     char grid[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
@@ -275,19 +275,76 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
     int *p_gridput = NULL;
     // variable that contains the value a value that determines who won
     char whoWon;
+
     printf("\nIn order to play you will be prompted to write two values. The first should be a letter corresponding  \nletter on the y-axis. Then you will type a number that corresponds to a number on the x-axis.\n");
-    do {
-        // gird input to go into the validation function
-        table_print(grid);
-        printf("\n");
-        // get player input for
-        p_gridput = player_input(Name1, Name2, Pchar, turns);
-        turns = grid_input(p_gridput, grid, turns);
-        screenClear();
-        winvar = win_check(grid, turns);
-        printf("\n     ||-----%d-----||\n", turns);
-        /* Check for win, change winvar to 1 to leave game loop */
-    } while (winvar <= 0);
+
+    if (dif = 0)
+    {
+    /*PVP GAME*/
+        do {
+            // gird input to go into the validation function
+            table_print(grid);
+            printf("\n");
+            // get player input for
+            p_gridput = player_input(Name1, Name2, Pchar, turns);
+            turns = grid_input(p_gridput, grid, turns);
+            screenClear();
+            winvar = win_check(grid, turns);
+            printf("\n     ||-----%d-----||\n", turns);
+            /* Check for win, change winvar to 1 to leave game loop */
+        } while (winvar <= 0);
+    }
+    /* PVE GAME */
+    else
+    {
+
+        do
+        {
+            // gird input to go into the validation function
+            table_print(grid);
+            printf("\n");            /* printf("turns: %d \n", turns); */
+
+            /* if Pchar = 'O', the player will go on even turns, and AIchar = 'X' which goes on odd turns */
+            if (Pchar = 'O')
+            {
+                /* Checking if the current turn count is even*/
+                if ((turns % 2) == 0)
+                {
+                    // get player input for
+                    p_gridput = player_input(Name1, Name2, Pchar, turns);
+                }
+                else
+                {
+                    printf("AI TURN\n");
+                    //p_gridput = ai_turn(dif);
+                }
+
+                turns = grid_input(p_gridput, grid, turns);
+            }
+
+            /* if Pchar = 'X' or its not assigned, the player will go on odd turns, which means AIchar = 'O' which goes on even turns */
+            else if (Pchar = 'X' || (Pchar != 'X' || Pchar != 'O') )
+            {
+                if ((turns % 2) == 1)
+                {
+                    // get player input for
+                    p_gridput = player_input(Name1, Name2, Pchar, turns);
+                }
+                else
+                {
+                    printf("AI TURN\n");
+                    //p_gridput = ai_turn(dif);
+                }
+            }
+
+            turns = grid_input(p_gridput, grid, turns);
+            screenClear();
+            winvar = win_check(grid, turns);
+            printf("\n     ||-----%d-----||\n", turns);
+            /* Check for win, change winvar to 1 to leave game loop */
+        } while (winvar <= 0);
+    }
+
     table_print(grid);
     // subtract 1 from turn because turn is increased inside the function, causing its value to be one large then it should be
     turns--;
@@ -307,6 +364,11 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
                 printf("\n%s won the match on turn %d as X", Name1, turns);
                 whoWon = 'x';
             }
+            /* checking if it was an Player vs AI Game */
+            else if (dif > 0)
+            {
+                printf("\nThe AI has won the match on turn %d as X", turns);
+            }
             else
             {
                 printf("\n%s won the match on turn %d as X", Name2, turns);
@@ -320,13 +382,18 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
                 printf("\n%s won the match on turn %d as O", Name1, turns);
                 whoWon = 'o';
             }
+             /* checking if it was an Player vs AI Game */
+            else if (dif > 0)
+            {
+                 printf("\nThe AI has won the match on turn %d as X", turns);
+            }
             else
             {
                 printf("\n%s won the match on turn %d as O", Name2, turns);
                 whoWon = 'o';
             }
         }
-        printf("\npress anywhere to return to menu");
+        printf("\nPress anywhere to return to menu");
     }while(!getch());
 
 

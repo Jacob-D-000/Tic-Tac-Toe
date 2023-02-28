@@ -14,8 +14,6 @@
        (the main commits can be used to explain the listed functions)
     */
 
-
-
 struct stats
 {
     // get info for values for all int from win program
@@ -32,18 +30,6 @@ struct stats
     int Player2W;
 
 } s1;
-
-// This function allows for the screen to be cleared on both windows and linux with 1 command.
-void screenClear() {
-    fflush(stdin);
-    #ifdef OS_Windows
-    screenClear();
-
-    #else
-    system("clear");
-
-    #endif
-}
 
 void showsts()
 {
@@ -108,6 +94,7 @@ char* getname2()
 void main_win_check(char winsts, char PE)
 {
     screenClear();
+    /* PVP win check */
     if (PE == 1)
     {
         if (winsts == 'x')
@@ -136,8 +123,34 @@ void main_win_check(char winsts, char PE)
         }
 
     }
+    /* PvE Win check "Player vs AI" */
     else
-        printf("No AI yet");
+    {
+        if (winsts == 'x')
+        {
+            s1.winX++;
+            if (s1.Pchar == 'X')
+            {
+                s1.winPvar++;
+            }
+            else
+                s1.winBvar++;
+        }
+        else if (winsts == 'o')
+        {
+            s1.winO++;
+            if (s1.Pchar == 'O')
+            {
+                s1.winPvar++;
+            }
+            else
+                s1.winBvar++;
+        }
+        else if (winsts == 't')
+        {
+            s1.Tie++;
+        }
+    }
 }
 void printstsmenu() {
     printf("||-----TIK TAC TOE-----||\n\n");
@@ -396,12 +409,15 @@ void FPorE()
 
     if (menu2 == PvE)
     {
-        BotSetting(); //BotSetting will call game_func
+        int dif = BotSetting();
+        winnerchar = game_func(s1.player1Name, s1.player2Name, s1.Pchar, dif);
+        main_win_check(winnerchar, menu2);
+        main();
     }
     else if (menu2 == PvP)
     {
       //run game program using PvP option
-      winnerchar = game_func(s1.player1Name, s1.player2Name, s1.Pchar);
+      winnerchar = game_func(s1.player1Name, s1.player2Name, s1.Pchar, 0);
       main_win_check(winnerchar, menu2);
       main();
     }
@@ -429,9 +445,10 @@ void printBotSettingmenu() {
     printf("|-print w to go up and s to go down and enter to use options and confirm input-|\n");
 }
 
-void BotSetting()
+int BotSetting()
 {
   int menu3;
+  /* Note that the difficulty settings for the bot are 0 for off, 1 for easy , 2 for medium, 3 for Hard */
   int Easy = 0;
   int Medium = 1;
   int Hard = 2;
@@ -533,22 +550,26 @@ void BotSetting()
 
   if (menu3 == Easy)
   {
-      dif = 0;
-      printf("Bot level %d", dif);
+      dif = 1;
+      //printf("Bot level %d", dif);
+      return dif;
   }
   else if (menu3 == Medium)
   {
-      dif = 1;
-      printf("Bot level %d", dif);
+      dif = 2;
+      //printf("Bot level %d", dif);
+      return dif;
   }
   else if (menu3 == Hard)
   {
-      dif = 2;
-      printf("Bot level %d", dif);
+      dif = 3;
+      //printf("Bot level %d", dif);
+      return dif;
   }
   else if (menu3 == back)
   {
       FPorE();
+      return 0;
   }
 }
 
