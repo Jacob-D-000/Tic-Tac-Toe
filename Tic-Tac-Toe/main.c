@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
 #include <conio.h>
 #include "game.h"
 
@@ -34,6 +33,18 @@ struct stats
 
 } s1;
 
+// This function allows for the screen to be cleared on both windows and linux with 1 command.
+void screenClear() {
+    fflush(stdin);
+    #ifdef OS_Windows
+    screenClear();
+
+    #else
+    system("clear");
+
+    #endif
+}
+
 void showsts()
 {
     //called in showstsmenu
@@ -62,7 +73,7 @@ int menuInput()
     input = getch();
     if (input == '\n')
     {
-        system("cls");
+        screenClear();
     }
     return input;
 }
@@ -96,7 +107,7 @@ char* getname2()
 // function to determine how to add x or o into player struct
 void main_win_check(char winsts, char PE)
 {
-    system("cls");
+    screenClear();
     if (PE == 1)
     {
         if (winsts == 'x')
@@ -164,7 +175,7 @@ void showstsmenu()
         switch(inputS)
         {
           case 'w':
-            system("cls");
+            screenClear();
             printstsmenu();
             showsts();
             if (menuS == Xs)
@@ -195,7 +206,7 @@ void showstsmenu()
             break;
 
           case 's':
-            system("cls");
+            screenClear();
             printstsmenu();
             showsts();
             if (menuS == Xs)
@@ -226,7 +237,7 @@ void showstsmenu()
             break;
 
           default:
-            system("cls");
+            screenClear();
             printstsmenu();
             showsts();
             if (menuS == Xs)
@@ -258,7 +269,7 @@ void showstsmenu()
       //change struct Pchar value to X
       fflush(stdin);
       s1.Pchar = 'X';
-      system("cls");
+      screenClear();
       showstsmenu();
   }
   else if (menuS == Os)
@@ -266,24 +277,24 @@ void showstsmenu()
       //change struct Pchar value to O
       fflush(stdin);
       s1.Pchar = 'O';
-      system("cls");
+      screenClear();
       showstsmenu();
   }
   else if (menuS == back)
   {
-      system("cls");
+      screenClear();
       main();
   }
   else if (menuS == User)
   {
       getname1();
-      system("cls");
+      screenClear();
       showstsmenu();
   }
   else if (menuS == User2)
   {
       getname2();
-      system("cls");
+      screenClear();
       showstsmenu();
   }
 
@@ -322,7 +333,7 @@ void FPorE()
       switch(input2)
       {
       case 'w':
-        system("cls");
+        screenClear();
         printFPorEmenu();
         if (menu2 == PvE)
         {
@@ -342,8 +353,9 @@ void FPorE()
         break;
 
       case 's':
-        system("cls");
+        screenClear();
         printFPorEmenu();
+        if (menu2 == PvE)
         if (menu2 == PvE)
         {
             menu2 = PvP;
@@ -362,7 +374,7 @@ void FPorE()
         break;
 
       default:
-        system("cls");
+        screenClear();
         printFPorEmenu();
         printf("!!---it didn't work---!!\n");
         if (menu2 == PvE)
@@ -380,7 +392,7 @@ void FPorE()
         break;
       }
   }while (input2 != 13);
-  system("cls");
+  screenClear();
 
     if (menu2 == PvE)
     {
@@ -407,7 +419,7 @@ void FRules()
   {
    printf("1. The game is played on a grid that's 3 squares by 3 squares.\n2. You are X, your friend (or the computer) is O. Players take turns putting their marks in empty squares.\n3. The first player to get 3 of there marks in a row (up, down, across, or diagonally) is the winner.\n4. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.\n ||--press enter to go back to menu--||\n");
   }while (!getch());
-  system("cls");
+  screenClear();
   main();
 }
 
@@ -444,7 +456,7 @@ void BotSetting()
       switch(input3)
       {
       case 'w':
-        system("cls");
+        screenClear();
         printBotSettingmenu();
         if (menu3 == Easy)
         {
@@ -469,7 +481,7 @@ void BotSetting()
         break;
 
       case 's':
-        system("cls");
+        screenClear();
         printBotSettingmenu();
         if (menu3 == Easy)
         {
@@ -494,7 +506,7 @@ void BotSetting()
         break;
 
       default:
-        system("cls");
+        screenClear();
         printBotSettingmenu();
         printf("!!---it didn't work---!!\n");
         if (menu3 == Easy)
@@ -516,7 +528,7 @@ void BotSetting()
         break;
       }
   }while (input3 != 13);
-  system("cls");
+  screenClear();
   //run bot and game program using dif value to determine bot difficulty
 
   if (menu3 == Easy)
@@ -580,7 +592,7 @@ int main()
             */
 
         case 'w':
-            system("cls");
+            screenClear();
             printmainmenu();
             if (menu == play)
             {
@@ -605,7 +617,7 @@ int main()
             break;
 
           case 's':
-            system("cls");
+            screenClear();
             printmainmenu();
             if (menu == play)
             {
@@ -630,7 +642,7 @@ int main()
             break;
 
           default:
-            system("cls");
+            screenClear();
             printmainmenu();
             printf("!!---it didnt work---!!\n");
             if (menu == play)
@@ -652,7 +664,7 @@ int main()
             break;
           }
       }while (input != 13);
-        system("cls");
+        screenClear();
         if (menu == play)
         {
             FPorE();

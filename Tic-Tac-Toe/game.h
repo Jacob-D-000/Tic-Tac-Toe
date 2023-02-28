@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+
 /*
 **Project: Tic-Tac-Toe
 **Author: Jacob Dimoff
@@ -8,6 +9,18 @@
 **Filename: game.h
 **Purpose: Create a table for tic tac toe and allow users to input values to play
 */
+
+// This function allows for the screen to be cleared on both windows and linux with 1 command.
+void screenClear() {
+    fflush(stdin);
+    #ifdef OS_Windows
+    screenClear();
+
+    #else
+    system("clear");
+
+    #endif
+}
 
 void table_print(char grid[3][3])
 {
@@ -270,7 +283,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar)
         // get player input for
         p_gridput = player_input(Name1, Name2, Pchar, turns);
         turns = grid_input(p_gridput, grid, turns);
-        system("cls");
+        screenClear();
         winvar = win_check(grid, turns);
         printf("\n     ||-----%d-----||\n", turns);
         /* Check for win, change winvar to 1 to leave game loop */
