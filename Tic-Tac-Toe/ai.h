@@ -49,6 +49,7 @@ Vertical Checks
 (board[0][col] = mark) && (board[1][col] = ' ') && (board[2][col] = mark)
 (board[0][col] = ' ') && (board[1][col] = mark) && (board[2][col] = mark)
 */
+/* Prototyping to remove warnings from build log */
 void Sleep();
 int tolower(); /* Really werid return type, but it is correct */
 void screenClear();
