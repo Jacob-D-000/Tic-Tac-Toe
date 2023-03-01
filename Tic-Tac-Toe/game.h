@@ -276,6 +276,11 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
     /* variable used to quickly determine what mark the AI is using, only set IF dif != 0, since then the AI game will run*/
     char AIchar;
 
+    if (Pchar !='O')
+    {
+        Pchar = 'X';
+    }
+
     printf("\nIn order to play you will be prompted to write two values. The first should be a letter corresponding  \nletter on the y-axis. Then you will type a number that corresponds to a number on the x-axis.\n");
 
     if (dif == 0)
@@ -330,7 +335,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
             }
 
             /* if Pchar = 'X' or its not assigned, the player will go on odd turns, which means AIchar = 'O' which goes on even turns */
-            else if (Pchar == 'X' || (Pchar != 'X' || Pchar != 'O') )
+            else if (Pchar == 'X' || (Pchar != 'X' && Pchar != 'O') )
             {
                 if ( (turns == 1) || (turns == 3) || (turns == 5) || (turns == 7) || (turns == 9) )
                 {

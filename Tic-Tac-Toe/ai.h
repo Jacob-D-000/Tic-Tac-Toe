@@ -51,6 +51,7 @@ Vertical Checks
 */
 
 /* Just a fun funciton, used to show that the program is still running while the AI is making its decisions */
+void Sleep();
 void scheming()
 {
     printf("\n Plotting your Demise");
@@ -69,19 +70,9 @@ int * ai_turn(int difficulty, char mark, char enemyMark, int turnCount, char boa
     int randomNumber;
     int sides[4][2] = {{0,1},{1,0},{1,2},{2,1}};
     int corners[4][2] = {{0,0},{0,2},{2,0},{2,2}};
-
-    if (mark != 'X' && mark != 'O')
-    {
-        mark = 'o'; /* This is the AI mark*/
-        enemyMark = 'x';  /* This is the PLAYER mark*/
-    }
-    else
-    {
     /* Translating uppercase ASCII to lowercase equivlent*/
-        mark = tolower(mark);
-        enemyMark = tolower(enemyMark);
-    }
-
+    mark = tolower(mark);
+    enemyMark = tolower(enemyMark);
     static int aiMove[2] = {0,0};
 
     /* Check Row for Wins */
@@ -319,100 +310,6 @@ int * ai_turn(int difficulty, char mark, char enemyMark, int turnCount, char boa
     }
     return aiMove;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void superDuperSecretFunction()
 {
