@@ -208,8 +208,6 @@ int grid_input(int *gridput, char (*p_grid)[3], int turn)
     // dereference the grid input pointer into x and y. These correspond to ynum and xnum from player_input
     y = *(gridput + 0);
     x = *(gridput + 1);
-    printf("Y: %d\n", y);
-    printf("X: %d\n", x);
     // deinitialize pointer into variables for 2d array "grid"
     printf("%c\n", *(p_grid[y] + x));
     if (*(p_grid[y] + x) == ' ')
@@ -275,10 +273,12 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
     int *p_gridput = NULL;
     // variable that contains the value a value that determines who won
     char whoWon;
+    /* variable used to quickly determine what mark the AI is using, only set IF dif != 0, since then the AI game will run*/
+    char AIchar;
 
     printf("\nIn order to play you will be prompted to write two values. The first should be a letter corresponding  \nletter on the y-axis. Then you will type a number that corresponds to a number on the x-axis.\n");
 
-    if (dif = 0)
+    if (dif == 0)
     {
     /*PVP GAME*/
         do {
@@ -297,6 +297,13 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
     /* PVE GAME */
     else
     {
+        /* Setting AIchar to be the opposite of Pchar, ASSUMING if Pchar is not set to O, then it is either 'X' or not set at all, which means the user is 'X' so AIchar must be 'O'*/
+        if (Pchar =='O') {
+            AIchar = 'X';
+        }
+        else {
+            AIchar = 'O';
+        }
 
         do
         {
@@ -305,35 +312,35 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
             printf("\n");            /* printf("turns: %d \n", turns); */
 
             /* if Pchar = 'O', the player will go on even turns, and AIchar = 'X' which goes on odd turns */
-            if (Pchar = 'O')
+            if (Pchar =='O')
             {
                 /* Checking if the current turn count is even*/
-                if ((turns % 2) == 0)
+                if ( (turns == 2) || (turns == 4) || (turns == 6) || (turns == 8))
                 {
                     // get player input for
                     p_gridput = player_input(Name1, Name2, Pchar, turns);
                 }
                 else
                 {
-                    printf("AI TURN\n");
-                    //p_gridput = ai_turn(dif);
+                    printf("AI TURN - AIchar = %c\n", AIchar);
+                    p_gridput = ai_turn(dif,AIchar,Pchar,turns,grid);
                 }
 
                 turns = grid_input(p_gridput, grid, turns);
             }
 
             /* if Pchar = 'X' or its not assigned, the player will go on odd turns, which means AIchar = 'O' which goes on even turns */
-            else if (Pchar = 'X' || (Pchar != 'X' || Pchar != 'O') )
+            else if (Pchar == 'X' || (Pchar != 'X' || Pchar != 'O') )
             {
-                if ((turns % 2) == 1)
+                if ( (turns == 1) || (turns == 3) || (turns == 5) || (turns == 7) || (turns == 9) )
                 {
                     // get player input for
                     p_gridput = player_input(Name1, Name2, Pchar, turns);
                 }
                 else
                 {
-                    printf("AI TURN\n");
-                    //p_gridput = ai_turn(dif);
+                    printf("AI TURN - AIchar = %c\n", AIchar);
+                    p_gridput = ai_turn(dif,AIchar,Pchar,turns,grid);
                 }
             }
 
@@ -355,7 +362,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
         if (winvar == 2)
         {
             whoWon = 't';
-            printf("Game was a Tie");
+            printf("\nGame was a Tie");
         }
         else if (turns == 5 || turns == 7 || turns == 9)
         {
@@ -371,7 +378,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
             }
             else
             {
-                printf("\n%s won the match on turn %d as X", Name2, turns);
+                printf("\n%s won the match on turn %d as O", Name2, turns);
                 whoWon = 'x';
             }
         }
@@ -381,6 +388,12 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
             {
                 printf("\n%s won the match on turn %d as O", Name1, turns);
                 whoWon = 'o';
+
+                /* Nothing Happening Here Officer */
+                if (dif == 3)
+                {
+                    superDuperSecretFunction();
+                }
             }
              /* checking if it was an Player vs AI Game */
             else if (dif > 0)
@@ -389,7 +402,7 @@ char game_func(char Name1[255], char Name2[255], char Pchar, int dif)
             }
             else
             {
-                printf("\n%s won the match on turn %d as O", Name2, turns);
+                printf("\n%s won the match on turn %d as X", Name2, turns);
                 whoWon = 'o';
             }
         }

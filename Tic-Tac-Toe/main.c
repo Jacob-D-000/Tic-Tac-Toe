@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include "ai.h"
 #include "game.h"
+
 
     //ASCII codes
     //Enter Key = 13
@@ -13,6 +15,7 @@
        with different Arrays and values to show different outputs and get new inputs.
        (the main commits can be used to explain the listed functions)
     */
+int BotSetting();
 
 struct stats
 {
@@ -129,7 +132,7 @@ void main_win_check(char winsts, char PE)
         if (winsts == 'x')
         {
             s1.winX++;
-            if (s1.Pchar == 'X')
+            if (s1.Pchar == 'X' || (s1.Pchar != 'X' || s1.Pchar != 'O') )
             {
                 s1.winPvar++;
             }
@@ -368,7 +371,6 @@ void FPorE()
       case 's':
         screenClear();
         printFPorEmenu();
-        if (menu2 == PvE)
         if (menu2 == PvE)
         {
             menu2 = PvP;
