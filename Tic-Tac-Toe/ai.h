@@ -49,9 +49,11 @@ Vertical Checks
 (board[0][col] = mark) && (board[1][col] = ' ') && (board[2][col] = mark)
 (board[0][col] = ' ') && (board[1][col] = mark) && (board[2][col] = mark)
 */
+void Sleep();
+int tolower(); /* Really werid return type, but it is correct */
+void screenClear();
 
 /* Just a fun funciton, used to show that the program is still running while the AI is making its decisions */
-void Sleep();
 void scheming()
 {
     printf("\n Plotting your Demise");

@@ -15,7 +15,9 @@
        with different Arrays and values to show different outputs and get new inputs.
        (the main commits can be used to explain the listed functions)
     */
+/* Prototyping statements to get rid of warnings */
 int BotSetting();
+int main();
 
 struct stats
 {
@@ -571,8 +573,9 @@ int BotSetting()
   else if (menu3 == back)
   {
       FPorE();
-      return 0;
   }
+
+  return 0;
 }
 
 void printmainmenu() {
