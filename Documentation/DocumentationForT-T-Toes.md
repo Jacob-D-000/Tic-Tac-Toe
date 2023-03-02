@@ -16,7 +16,7 @@ I think I have the charts logic mostly filled out. It might not be the most opti
 ### 4:00 - 5:00pm
 I was able to implement the flowchart, all be it there were come flaws with the ASCII art so I will fix that when I get home. I'll explain that in further detail then.
 ### 6:00 - 7:00pm
-So, what was my issue? To put it simply, whitespace. The issues of primary came form how the "\n" was placed in the variable eline. Because eline had a return character and the loop put another return character after each loop of "i", the an extra line was placed of line 3 and 7 (see an ASCII mock-up below in Fig 3. These changes have also been documented in asciiArtFromLiamforReference.txt). 
+So, what was my issue? To put it simply, whitespace. The issues of primary came form how the "\n" was placed in the variable "eline" . Because eline had a return character and the loop put another return character after each loop of "i", the an extra line was placed of line 3 and 7 (see an ASCII mock-up below in Fig 3. These changes have also been documented in asciiArtFromLiamforReference.txt). 
 
 </br>![ASCCI_TICTACTOE](ASCCI_TERMINAL.png)
 fig 1. ASCII Tic-Tac-Toe table in the terminal
@@ -50,3 +50,5 @@ After some research I was able to create a header file that can be referenced by
 ## Feb 18th
 ### 12:30 - 1:45 & 4:30 - 5:25
 Me and Liam worked on adding the game.h file to our main menu file and we got jit to work pretty well. We ran into an issue connecting it, but it was a simple syntax error. When using a home made .h file, always include it with "" instead of <>. Liam also made a interesting point when he said we didn't have a way to see of the players tied. Me and him spent the later half of our work session figuring out how to make that work. We eventually got it working to, despite our frustrations. I can say that the PVP part of this game is pretty much done now.
+## Feb 28th
+This was the last day that I worked on the project before our final release(at least what I think is the final version. Who knows how much Nathan will tinker with the code.) We had linked the two header files (game.h and ai.h), fixed bugs and corrected any warnings that CodeBlocks threw our way. The biggest issue me and Nathan had to fix was the hard ai. The goal of the hard ai is to basically be unbeatable. It would play corners, unless it saw that the player would win. If it saw this, it would block the players win, and then try to ge its own win. However, we ran into an issues where the ai wouldn't recognize that the player was about to win. In the end, this error was caused by the player not having an assigned value to determine whether they are X or O so we just wrote a line that allowed it to recognize that the player was X if no value was assigned in the menu. I going to start writing up a README for the repository so when this is made public, it will be half ways Presentable.
