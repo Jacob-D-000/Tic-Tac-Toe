@@ -266,7 +266,7 @@ int * ai_turn(int difficulty, char mark, char enemyMark, int turnCount, char boa
 
     switch(difficulty)
     {
-        /* Easy and Medium use the same random number generaor, but easy doesnt check for wins*/
+        /* Easy picks a random side if avalible, otherwise picks randomly, easy also doesnt check for wins*/
         case 1:
         {
             if (board[0][1] == ' ' || board[1][0] == ' ' || board[1][2] == ' ' || board [2][1] == ' ')
@@ -279,7 +279,8 @@ int * ai_turn(int difficulty, char mark, char enemyMark, int turnCount, char boa
             }
             /* Randomly pick if sides are already gone*/
         }
-
+		
+		/* Medium picks the middle spot if avalible, otherwise picks randomly unless it has already selected its position with the win/lose condition checks earlier*/
         case 2:
         {
             if (board[1][1] == ' ')
@@ -290,7 +291,8 @@ int * ai_turn(int difficulty, char mark, char enemyMark, int turnCount, char boa
             }
             /* Randomly pick if middle is already gone*/
         }
-
+		
+		/* Hard picks a random corner if avalible, otherwise picks randomly unless it has already selected its position with the win/lose condition checks earlier*/
         case 3:
         {
             if (board[0][0] == ' ' || board[0][2] == ' ' || board[2][0] == ' ' || board[2][2] == ' ')
@@ -300,7 +302,7 @@ int * ai_turn(int difficulty, char mark, char enemyMark, int turnCount, char boa
                 aiMove[1] = corners[randomNumber][1];
                 break;
             }
-            /* Randomly pick if corners are already gone, will never matter due to anti-win checks*/
+            /* Randomly pick if all corners are already gone, will never matter due to anti-win checks and the limited number of moves in tic-tac-toe*/
         }
 
         /*The option selected if the difficulty's if statement evaluates to false*/
