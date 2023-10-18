@@ -17,6 +17,7 @@
     */
 /* Prototyping statements to get rid of warnings */
 int BotSetting();
+char* setDefPlayerNames();
 int main();
 
 struct stats
@@ -35,6 +36,11 @@ struct stats
     int Player2W;
 
 } s1;
+
+char* setDefPlayerNames(){
+    s1.player1Name[255] = "Player 1";
+    s1.player2Name[255] = "Player 2";
+}
 
 void showsts()
 {
