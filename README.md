@@ -1,7 +1,7 @@
 # Tic-Tac-Toe
 
 ## Description
-This Tic-Tac-Toe game was created for a final project in our NSCC IT Programming 2007 Course to demonstrate all we learned in our second semester. The course focused on using C which was quite a change of pace for us since we had primarily programmed in Python.
+This Tic-Tac-Toe game was created for a final project in our NSCC IT PROG2007 Course to demonstrate all we learned in our second semester. The course focused on using C which was quite a change of pace for us since we had primarily programmed in Python.
 
 The goal of the application is quite simple. Create a playable Tic-Tac-Toe game in C and use the command line as an interface. The game contains a simple grid in which the player inputs 2 numbers between 1 and 3 which act as coordinates that the program uses to place X or O in the corresponding cell. The app features a rudimentary AI opponent with multiple difficulties as well as the ability to play with friends in a two-player mode. The game keeps score between rounds to show how well you have been playing.
 
